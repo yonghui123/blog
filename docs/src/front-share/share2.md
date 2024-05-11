@@ -10,7 +10,7 @@ export default defineConfig({
   title: "Yonghui Zhao",
   description: "Yonghui Zhao's Personal Page",
   srcDir: "src",
-  base: process.env.NODE_ENV === "production" ? "./" : "",
+  base: process.env.NODE_ENV === "production" ? "/blog/" : "",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
