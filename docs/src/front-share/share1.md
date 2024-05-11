@@ -1,4 +1,10 @@
-### p标签嵌套
+---
+
+layout: doc
+
+---
+
+## p标签嵌套
 p标签的省略规则，开始标签是必要的，如果开始标签后紧跟着下列标签，或者父元素没有其他内容，且父元素不是a标签，则可以省略结束标签
 ```html
 <p class="p">p标签<p class="pp">嵌套p标签</p></p>
@@ -21,7 +27,7 @@ p标签的省略规则，开始标签是必要的，如果开始标签后紧跟�
 <p></p>
 ```
 
-### jsDoc
+## jsDoc
 在js中定义详细的类型，好处
 1. 编辑器中识别需要的变量，函数等
 2. 调用代码的时候给出对应的提示
@@ -99,7 +105,7 @@ var canvas = document.createElement('canvas');
 var number = 1;
 ```
 
-### 字符串填充
+## 字符串填充
 将字符串前面补充到指定长度
 ```javascript
 var str1 = "4"
@@ -113,7 +119,7 @@ str1.padEnd(5, "*");
 // 结果： 5****
 ```
 
-### css Grid 布局
+## css Grid 布局
 通过grid布局划分区域
 ```css
 .grid {
@@ -164,7 +170,7 @@ str1.padEnd(5, "*");
   <div class="grid-item item5"></div>
 </div>
 ```
-### ESM导入问题
+## ESM导入问题
 在模块中导出数据
 ```javascript
 // moduleA
@@ -197,3 +203,5 @@ incrementCount();
 console.log(count);
 ```
 在ESM中导入导出的是同一块内存地址，这个现象叫做符号绑定
+
+
