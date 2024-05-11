@@ -4,6 +4,8 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Yonghui Zhao",
   description: "Yonghui Zhao's Personal Page",
+  srcDir: "./src",
+  base: "./",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
