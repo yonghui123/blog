@@ -1,4 +1,6 @@
 import { defineConfig } from "vitepress";
+import { chineseSearchOptimize, pagefindPlugin } from 'vitepress-plugin-pagefind'
+
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -8,32 +10,9 @@ export default defineConfig({
   base: process.env.NODE_ENV === "production" ? "/blog/" : "",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: "首页", link: "/" },
-      { text: "文章", link: "/articles/" },
-      { text: "前端分享", link: "/front-share/" },
-    ],
+    nav: [],
 
-    sidebar: {
-      "/articles": [
-        {
-          text: "文章",
-          items: [
-            { text: "文章1", link: "/articles/article1" },
-            { text: "文章2", link: "/articles/article2" },
-          ],
-        },
-      ],
-      "/front-share": [
-        {
-          text: "前端分享",
-          items: [
-            { text: "分享1", link: "/front-share/share1" },
-            { text: "分享2", link: "/front-share/share2" },
-          ],
-        },
-      ],
-    },
+    sidebar: [{}],
 
     outline: {
       label: "页面导航",
@@ -41,4 +20,15 @@ export default defineConfig({
 
     socialLinks: [{ icon: "github", link: "https://github.com/vuejs/vitepress" }],
   },
+  vite: {
+    plugins: [
+      pagefindPlugin({
+        customSearchQuery: chineseSearchOptimize,
+        btnPlaceholder: "搜索文档",
+        placeholder: "搜索文档",
+        emptyText: "没有内容",
+        heading: "共{{searchResult}}条搜索结果"
+      })
+    ]
+  }
 });
