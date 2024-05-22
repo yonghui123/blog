@@ -40,8 +40,7 @@
 
     <template #aside-bottom>
       <ClientOnly>
-        <!-- <ArticleLink v-if="(frontmatter?.post)" :key="md5(page.relativePath)" /> -->
-        <!-- <PageASide v-if="frontmatter.index" /> -->
+        <PageAside v-if="frontmatter.index"></PageAside>
       </ClientOnly>
       <!-- <Links v-if="(frontmatter.index)" /> -->
     </template>
@@ -53,6 +52,7 @@
 <script lang="ts" setup>
 import Home from "../components/Home.vue";
 import SiderNav from "../components/SiderNav.vue";
+import PageAside from "../components/PageAside.vue";
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
 
