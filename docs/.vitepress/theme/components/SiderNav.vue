@@ -8,30 +8,52 @@
       >
         <a class="category-item-link" :href="withBase(`/`)">首页</a>
       </li>
-
-      <li class="li">
-        <a href="" class="category-item-link">测试 <strong class="VPBadge tip strong mini">11</strong></a>
-      </li>
-      <!-- <li
-        class="li"
-        @click="choose(key.toString())"
-        :class="{ on: (params.get('category') === key.toString() && selected === '') || selected === key.toString() }"
-        v-for="(item, key) in data"
+      
+      <li
+        class="category-item"
+        @click="setCategory(key.toString())"
+        :class="{ on: selected === key.toString() }"
+        v-for="(item, key) in categoryData"
       >
-        <a class="a" :href="withBase(`/?category=${key.toString()}`)"
-          >{{ key }}<strong class="VPBadge tip strong mini">{{ data[key].length }}</strong></a
+        <a class="category-item-link" :href="withBase(`/?category=${key.toString()}`)"
+          >{{ key }}<strong class="VPBadge tip strong mini">{{ categoryData[key].length }}</strong></a
         >
-      </li> -->
+      </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { useData, withBase } from "vitepress";
+import { computed, ref, onMounted } from "vue";
+import { getPageClassifying } from "../pageData/util";
+import { data } from "../pageData/posts.data";
 
 let url = window.location.href.split("?")[1];
+console.log('url: ', url);
 let params = new URLSearchParams(url);
+
+const selected = ref('')
+const setCategory = (key: string) => {
+  selected.value = key;
+}
+
+onMounted(() => {
+  console.log("params", params.get("category"));
+  var category = params.get("category");
+  if(category) {
+    setCategory(category);
+  }
+})
+
 const { page } = useData();
+const categoryData = computed(() => {
+  return getPageClassifying(data, "catrgories");
+});
+
+
+
+
 </script>
 
 <style scoped lang="scss">

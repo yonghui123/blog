@@ -61,8 +61,5 @@ import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
 
 const { page, theme, frontmatter, isDark } = useData();
-console.log('theme: ', theme);
-console.log('page: ', page);
-console.log('frontmatter: ', frontmatter);
 const { Layout } = DefaultTheme;
 </script>

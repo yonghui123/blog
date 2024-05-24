@@ -1,6 +1,6 @@
-import { defineConfig } from "vitepress";
+import { createContentLoader, defineConfig } from "vitepress";
 import { chineseSearchOptimize, pagefindPlugin } from 'vitepress-plugin-pagefind'
-
+import { genFeed } from "./genFeed";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -33,5 +33,9 @@ export default defineConfig({
         heading: "共{{searchResult}}条搜索结果"
       })
     ]
-  }
+  },
+  // async buildEnd() {
+  //   const posts = await createContentLoader("**/*.md").load();
+  //   console.log('posts: ', posts);
+  // },
 });
