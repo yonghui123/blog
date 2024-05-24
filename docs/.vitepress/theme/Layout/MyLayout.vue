@@ -35,7 +35,10 @@
     </template>
 
     <template #doc-before>
-      <Home></Home>
+      <ClientOnly>
+        <HomeMeta v-if="frontmatter.index"></HomeMeta>
+        <PageMeta v-else></PageMeta>
+      </ClientOnly>
     </template>
 
     <template #aside-bottom>
@@ -50,12 +53,16 @@
 </template>
 
 <script lang="ts" setup>
-import Home from "../components/Home.vue";
+import HomeMeta from "../components/HomeMeta.vue";
+import PageMeta from "../components/PageMeta.vue";
 import SiderNav from "../components/SiderNav.vue";
 import PageAside from "../components/PageAside.vue";
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
 
 const { page, theme, frontmatter, isDark } = useData();
+console.log('theme: ', theme);
+console.log('page: ', page);
+console.log('frontmatter: ', frontmatter);
 const { Layout } = DefaultTheme;
 </script>

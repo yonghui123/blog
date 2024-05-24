@@ -2,6 +2,7 @@
 import type { Theme } from "vitepress";
 import DefaultTheme from "vitepress/theme";
 import MyLayout from "./Layout/MyLayout.vue";
+import Image from "./mdComponents/Image.vue";
 import "./styles/default.css";
 
 export default {
@@ -9,5 +10,6 @@ export default {
   Layout: MyLayout,
   enhanceApp({ app, router, siteData }) {
     // ...
+    app.component("Image", Image);
   },
 } satisfies Theme;
