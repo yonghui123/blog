@@ -1,40 +1,73 @@
 {
-  "hash": "27d94b7d",
-  "configHash": "1b33dd69",
+  "hash": "2d367c7b",
+  "configHash": "e92c36eb",
   "lockfileHash": "9d99e8f4",
-  "browserHash": "955884fb",
+  "browserHash": "4591a370",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/.pnpm/vue@3.4.27/node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "f2701f38",
+      "fileHash": "12d7c737",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../../node_modules/.pnpm/@vue+devtools-api@7.2.1_vue@3.4.27/node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "83184b5f",
+      "fileHash": "e651c2d0",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../../node_modules/.pnpm/@vueuse+core@10.9.0_vue@3.4.27/node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "09b6fbd4",
+      "fileHash": "c55e4bd4",
       "needsInterop": false
     },
     "vue-demi": {
-      "src": "../../../../node_modules/.pnpm/vitepress@1.2.2_@algolia+client-search@4.23.3_@types+node@20.12.12_markdown-it-mathjax3@4.3.2_aidrswljkzqfgg77xhzepqj6me/node_modules/vitepress/lib/vue-demi.mjs",
+      "src": "../../../../node_modules/.pnpm/vitepress@1.2.2_@algolia+client-search@4.23.3_@types+node@20.12.12_fuse.js@6.6.2_markdown-it-_t7i4n2llkd5leobnskr6cgnn5y/node_modules/vitepress/lib/vue-demi.mjs",
       "file": "vue-demi.js",
-      "fileHash": "9bea556b",
+      "fileHash": "55253e4a",
       "needsInterop": false
+    },
+    "floating-vue": {
+      "src": "../../../../node_modules/.pnpm/floating-vue@5.2.2_vue@3.4.27/node_modules/floating-vue/dist/floating-vue.mjs",
+      "file": "floating-vue.js",
+      "fileHash": "bbd281a7",
+      "needsInterop": false
+    },
+    "pinia": {
+      "src": "../../../../node_modules/.pnpm/pinia@2.1.7_vue@3.4.27/node_modules/pinia/dist/pinia.mjs",
+      "file": "pinia.js",
+      "fileHash": "e4f7bb34",
+      "needsInterop": false
+    },
+    "dayjs": {
+      "src": "../../../../node_modules/.pnpm/dayjs@1.11.11/node_modules/dayjs/dayjs.min.js",
+      "file": "dayjs.js",
+      "fileHash": "109bb072",
+      "needsInterop": true
+    },
+    "dayjs/plugin/relativeTime": {
+      "src": "../../../../node_modules/.pnpm/dayjs@1.11.11/node_modules/dayjs/plugin/relativeTime.js",
+      "file": "dayjs_plugin_relativeTime.js",
+      "fileHash": "9d6d23a2",
+      "needsInterop": true
+    },
+    "dayjs/plugin/duration": {
+      "src": "../../../../node_modules/.pnpm/dayjs@1.11.11/node_modules/dayjs/plugin/duration.js",
+      "file": "dayjs_plugin_duration.js",
+      "fileHash": "c46d6f45",
+      "needsInterop": true
     }
   },
   "chunks": {
-    "chunk-SGBJV6JD": {
-      "file": "chunk-SGBJV6JD.js"
+    "chunk-FHZSB2HS": {
+      "file": "chunk-FHZSB2HS.js"
     },
-    "chunk-DXDSLKAR": {
-      "file": "chunk-DXDSLKAR.js"
+    "chunk-WLOROBII": {
+      "file": "chunk-WLOROBII.js"
+    },
+    "chunk-P2LSHJDD": {
+      "file": "chunk-P2LSHJDD.js"
     }
   }
 }

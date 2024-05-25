@@ -1,11 +1,11 @@
 
 @import url(./pagefind.css);
-@font-face {
+/* @font-face {
     font-family: "beebee";
     font-weight: 400;
     src: url("/static/font/beebee.woff") format("woff");
     font-display: swap;
-}
+} */
 
 :root {
     --vp-c-brand: #0057ff;
@@ -67,7 +67,7 @@
     background-repeat: no-repeat;
 }
 
-.postlist.grid {
+.article-list.grid {
     display: grid;
     row-gap: 1.1rem;
     column-gap: 1.1rem;
@@ -81,7 +81,7 @@
 }
 
 @media (min-width: 550px) {
-    .postlist.grid {
+    .article-list.grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
@@ -91,16 +91,16 @@
         padding: 48px 32px 32px !important;
     }
 
-    .VPDoc.has-aside:not(.has-sidebar) .postlist.grid,
-    .VPDoc.has-sidebar:not(.has-aside) .postlist.grid {
+    .VPDoc.has-aside:not(.has-sidebar) .article-list.grid,
+    .VPDoc.has-sidebar:not(.has-aside) .article-list.grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .VPDoc.has-sidebar:not(.has-aside) .postlist.grid {
+    .VPDoc.has-sidebar:not(.has-aside) .article-list.grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .VPDoc:not(.has-sidebar):not(.has-aside) .postlist.grid {
+    .VPDoc:not(.has-sidebar):not(.has-aside) .article-list.grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
@@ -142,12 +142,12 @@
     }
 
 
-    .VPDoc.has-aside:not(.has-sidebar) .postlist.grid,
-    .VPDoc.has-sidebar:not(.has-aside) .postlist.grid {
+    .VPDoc.has-aside:not(.has-sidebar) .article-list.grid,
+    .VPDoc.has-sidebar:not(.has-aside) .article-list.grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .VPDoc:not(.has-sidebar):not(.has-aside) .postlist.grid {
+    .VPDoc:not(.has-sidebar):not(.has-aside) .article-list.grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
@@ -165,19 +165,19 @@
         max-width: 100%;
     }
 
-    .VPDoc.has-aside:not(.has-sidebar) .postlist.grid {
+    .VPDoc.has-aside:not(.has-sidebar) .article-list.grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .VPDoc.has-aside.has-sidebar .postlist.grid {
+    .VPDoc.has-aside.has-sidebar .article-list.grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .VPDoc.has-sidebar:not(.has-aside) .postlist.grid {
+    .VPDoc.has-sidebar:not(.has-aside) .article-list.grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .VPDoc:not(.has-sidebar):not(.has-aside) .postlist.grid {
+    .VPDoc:not(.has-sidebar):not(.has-aside) .article-list.grid {
         grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 }
@@ -195,20 +195,20 @@
         max-width: 100%;
     }
 
-    .VPDoc.has-aside:not(.has-sidebar) .postlist.grid {
+    .VPDoc.has-aside:not(.has-sidebar) .article-list.grid {
         grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
-    .VPDoc.has-aside.has-sidebar .postlist.grid {
+    .VPDoc.has-aside.has-sidebar .article-list.grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
 
-    .VPDoc.has-sidebar:not(.has-aside) .postlist.grid {
+    .VPDoc.has-sidebar:not(.has-aside) .article-list.grid {
         grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
-    .VPDoc:not(.has-sidebar):not(.has-aside) .postlist.grid {
+    .VPDoc:not(.has-sidebar):not(.has-aside) .article-list.grid {
         grid-template-columns: repeat(5, minmax(0, 1fr));
     }
 }
@@ -226,20 +226,20 @@
         max-width: 100%;
     }
 
-    .VPDoc.has-aside:not(.has-sidebar) .postlist.grid {
+    .VPDoc.has-aside:not(.has-sidebar) .article-list.grid {
         grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
-    .VPDoc.has-aside.has-sidebar .postlist.grid {
+    .VPDoc.has-aside.has-sidebar .article-list.grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
 
-    .VPDoc.has-sidebar:not(.has-aside) .postlist.grid {
+    .VPDoc.has-sidebar:not(.has-aside) .article-list.grid {
         grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
-    .VPDoc:not(.has-sidebar):not(.has-aside) .postlist.grid {
+    .VPDoc:not(.has-sidebar):not(.has-aside) .article-list.grid {
         grid-template-columns: repeat(5, minmax(0, 1fr));
     }
 }

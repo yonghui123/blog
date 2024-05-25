@@ -1,63 +1,53 @@
 <template>
   <div class="sider-nav">
     <ul class="category-list">
-      <li
-        class="category-item"
-        @click="choose('home')"
-        :class="{ on: (page.relativePath == 'index.md' && selected === '' && !params.get('category') && !params.get('tag')) || selected === 'home' }"
-      >
-        <a class="category-item-link" :href="withBase(`/`)">首页</a>
+      <li class="category-item" @click="onChangeCategory('')" :class="{ on: selected === '' }">
+        <span class="category-item-link">全部</span>
       </li>
-      
-      <li
-        class="category-item"
-        @click="setCategory(key.toString())"
-        :class="{ on: selected === key.toString() }"
-        v-for="(item, key) in categoryData"
-      >
-        <a class="category-item-link" :href="withBase(`/?category=${key.toString()}`)"
-          >{{ key }}<strong class="VPBadge tip strong mini">{{ categoryData[key].length }}</strong></a
-        >
+
+      <li class="category-item" @click="onChangeCategory(key.toString())" :class="{ on: selected === key.toString() }" v-for="(item, key) in categoryData">
+        <span class="category-item-link">
+          {{ key }}
+          <strong class="VPBadge tip strong mini">
+            {{ categoryData[key].length }}
+          </strong>
+        </span>
       </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useData, withBase } from "vitepress";
-import { computed, ref, onMounted } from "vue";
+import { useRouter } from "vitepress";
+import { computed } from "vue";
 import { getPageClassifying } from "../pageData/util";
 import { data } from "../pageData/posts.data";
+import { useCategory } from "../pageData/storeToRefHook";
 
-let url = window.location.href.split("?")[1];
-console.log('url: ', url);
-let params = new URLSearchParams(url);
-
-const selected = ref('')
-const setCategory = (key: string) => {
-  selected.value = key;
-}
-
-onMounted(() => {
-  console.log("params", params.get("category"));
-  var category = params.get("category");
-  if(category) {
-    setCategory(category);
+const { categoryTarget, field, setCategory } = useCategory();
+const selected = computed(() => {
+  if (field.value == "categories" && categoryTarget.value) {
+    return categoryTarget.value;
   }
-})
-
-const { page } = useData();
-const categoryData = computed(() => {
-  return getPageClassifying(data, "catrgories");
 });
 
+const categoryData = computed(() => {
+  return getPageClassifying(data, "categories");
+});
 
-
-
+const router = useRouter();
+const onChangeCategory = (key) => {
+  if (key == categoryTarget) {
+    return;
+  }
+  setCategory("categories", key);
+  if(router.route.path !== '/') {
+    router.go('/')
+  }
+};
 </script>
 
 <style scoped lang="scss">
-
 .tags,
 .archives {
   padding: 0;

@@ -30,14 +30,13 @@
 
     <template #doc-top>
       <ClientOnly>
-        <!-- <PageSlider v-if="frontmatter?.index" :key="md5(page.relativePath)"></PageSlider> -->
       </ClientOnly>
     </template>
 
     <template #doc-before>
       <ClientOnly>
         <HomeMeta v-if="frontmatter.index"></HomeMeta>
-        <PageMeta v-else></PageMeta>
+        <PageMeta v-else :article="page"></PageMeta>
       </ClientOnly>
     </template>
 

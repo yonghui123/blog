@@ -3,7 +3,7 @@ import {
   isVue2,
   isVue3,
   set
-} from "./chunk-SGBJV6JD.js";
+} from "./chunk-FHZSB2HS.js";
 import {
   Fragment,
   TransitionGroup,
@@ -39,7 +39,8 @@ import {
   version,
   watch,
   watchEffect
-} from "./chunk-DXDSLKAR.js";
+} from "./chunk-WLOROBII.js";
+import "./chunk-P2LSHJDD.js";
 
 // node_modules/.pnpm/@vueuse+shared@10.9.0_vue@3.4.27/node_modules/@vueuse/shared/index.mjs
 function computedEager(fn, options) {

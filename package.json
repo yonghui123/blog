@@ -19,9 +19,13 @@
     "vue": "^3.4.27"
   },
   "dependencies": {
+    "@vueuse/core": "^10.9.0",
+    "dayjs": "^1.11.11",
+    "feed": "^4.2.2",
+    "floating-vue": "^5.2.2",
     "markdown-it-mathjax3": "^4.3.2",
     "pagefind": "^1.1.0",
-    "vitepress-plugin-pagefind": "^0.3.2",
-    "feed": "^4.2.2"
+    "pinia": "^2.1.7",
+    "vitepress-plugin-pagefind": "^0.3.2"
   }
 }
