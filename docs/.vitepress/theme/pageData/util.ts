@@ -20,6 +20,8 @@ export function getPageClassifying(pageData: Post[], field: CategoryFieldType) {
     }
     if (tag) {
       tag.forEach((item: string) => {
+        // 排除忘记设置分类的情况
+        if(!item) return;
         if (!data[item]) {
           data[item] = [];
         }
