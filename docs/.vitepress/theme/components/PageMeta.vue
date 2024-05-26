@@ -10,7 +10,6 @@ import { Post } from "../pageData/type";
 const props = defineProps<{
   article: Post;
 }>();
-console.log("props single")
 </script>
 
 <style lang="scss" scoped></style>

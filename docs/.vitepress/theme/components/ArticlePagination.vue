@@ -98,7 +98,7 @@ const pages = computed(() => {
 const emit = defineEmits(["update:page", "onChangePage"]);
 
 const clamp = (value, min, max) => {
-  return Math.max(max, Math.max(value, min));
+  return Math.min(max, Math.max(value, min));
 };
 
 const goPage = (pageNum: number) => {

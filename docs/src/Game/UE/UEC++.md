@@ -1,12 +1,11 @@
 ---
 title: UEC++基础知识
 date: 2024-05-25
-cover:
+cover: img/unreal/unreal.jpg
 categories:
   - UE
 tags:
   - GAME
-  - UE
   - cpp
 description: 详细介绍在UE中C++的基础知识
 ---

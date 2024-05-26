@@ -1,11 +1,11 @@
-import { createContentLoader, defineConfig } from "vitepress";
+import { defineConfigWithTheme } from "vitepress";
 import { chineseSearchOptimize, pagefindPlugin } from 'vitepress-plugin-pagefind'
 import { genFeed } from "./genFeed";
+import { ThemeConfig } from "./theme/pageData/type";
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default defineConfigWithTheme<ThemeConfig>({
   title: "Yonghui Zhao",
-  description: "Yonghui Zhao's Personal Page",
   srcDir: "src",
   base: process.env.NODE_ENV === "production" ? "/blog/" : "",
   themeConfig: {
@@ -19,9 +19,21 @@ export default defineConfig({
     },
 
     socialLinks: [{ icon: "github", link: "https://github.com/vuejs/vitepress" }],
+    site: {
+      author: "Yonghui Zhao",
+    },
+    showMusic: false,
+    music: [],
   },
   markdown: {
     math: true,
+    toc: {
+      slugify: (str) => {
+        console.log(str);
+        return str
+      },
+      level: [2, 3],
+    }
   },
   vite: {
     plugins: [

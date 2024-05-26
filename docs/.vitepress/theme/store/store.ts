@@ -24,10 +24,24 @@ export const useLayoutStore = defineStore("layout", () => {
 
 export const useArticlePagnationStore = defineStore("articlepagnation", () => {
   const page = ref(1);
-  const limit = 10;
+  const limit = 12;
   const setPage = (pageParams: number) => {
     page.value = pageParams;
-  }
+  };
 
   return { page, limit, setPage };
-})
+});
+
+export const useMusicStore = defineStore("music", () => {
+  // 进来默认是关闭的
+  const isPause = ref<boolean>(true);
+  const autio = new Audio();
+  // 当前播放的歌曲id， -1代表没有歌曲播放
+  const curPlayId = ref<number>(-1);
+
+  const setMusicStatus = (status: boolean) => {
+    isPause.value = status;
+  };
+
+  return { isPause, setMusicStatus };
+});

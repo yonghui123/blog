@@ -1,4 +1,4 @@
-import { useArticlePagnationStore, useCategoryStore, useLayoutStore } from "../store/store";
+import { useArticlePagnationStore, useCategoryStore, useLayoutStore, useMusicStore } from "../store/store";
 import { storeToRefs } from "pinia";
 
 export const useCategory = () => {
@@ -22,4 +22,14 @@ export const useArticlePagnation = () => {
   const { setPage } = pagnationStore;
   const { page } = storeToRefs(pagnationStore);
   return { page, limit: pagnationStore.limit, setPage };
+};
+
+export const useMusic = () => {
+  const musicStore = useMusicStore();
+  const { setMusicStatus } = musicStore;
+  const changeMusicStatue = () => {
+    setMusicStatus(!isPause.value);
+  };
+  const { isPause } = storeToRefs(musicStore);
+  return { isPause, changeMusicStatue };
 };

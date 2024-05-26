@@ -3,12 +3,12 @@
     <div
       class="acontent"
       :style="{
-        'padding-bottom': type !== 'articlelist' ? '220px' : '122px',
+        'padding-bottom': type !== 'articlelist' ? '280px' : '122px',
       }"
     >
-      <div class="authorarea" :class="{ happy: !isPause }">
+      <div class="authorarea">
         <div class="author">
-          <div class="avator" :class="{ pay: pay }" v-tooltip="talkword">
+          <div class="avator" :class="{ pay: pay }">
             <div class="light"></div>
             <div class="pods" v-if="!isPause"></div>
             <div class="eyesContainer">
@@ -53,12 +53,12 @@
             </div>
           </div>
           <div class="nickname">
-            <a :href="theme?.article?.cc?.authorLink" target="_blank">博主：{{ theme?.article?.cc?.author }}</a>
+            <a :href="theme?.article?.cc?.authorLink" target="_blank">博主：{{ theme.site.author }}</a>
           </div>
         </div>
         <div class="social">
           <ul class="ul">
-            <template v-if="theme.website?.cardMusic">
+            <template v-if="theme.showMusic">
               <li class="li" v-if="isPause" @click="togglePlay">
                 <div class="group">
                   <svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -138,19 +138,17 @@
 <script lang="ts" setup>
 import { ref, onMounted, computed, toRefs } from "vue";
 import { useData } from "vitepress";
-// import { usePlayerStore } from "../../store/player";
-// import type { Song } from "../../theme/types";
+import { useMusic } from "../pageData/storeToRefHook";
+import { filterArticleWithField } from "../pageData/util";
 import { data as themeposts } from "../pageData/posts.data";
 const { theme, frontmatter } = useData();
-// const { pushPlayList } = usePlayerStore();
-// const { togglePlay, isPause } = toRefs(usePlayerStore());
+const { changeMusicStatue, isPause } = useMusic();
 // const songList = ref<Song[]>();
 // songList.value = theme.value?.music ? theme.value.music : [];
 // pushPlayList(true, ...songList.value);
 const props = defineProps<{
   type?: string;
 }>();
-const talkword = ref("听歌让我快乐");
 const movementx = ref(50);
 const movementy = ref(50);
 const pay = ref(false);
@@ -160,7 +158,7 @@ const coffeepay = () => {
 };
 
 const totalArticles = computed(() => {
-  return themeposts.filter((article: any) => article?.frontmatter?.publish !== false);
+  return filterArticleWithField(themeposts, "", "categories");
 });
 const nowMonth = new Date().getMonth();
 const nowYear = new Date().getFullYear();
@@ -182,7 +180,7 @@ onMounted(() => {
   });
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
 .PageAside {
   .total {
     display: flex;
@@ -482,21 +480,9 @@ onMounted(() => {
     }
   }
 
-  /* hover events */
-
-  /* eye lids */
-  .eyelid {
-    /* transform: rotate(15deg); */
-  }
-
-  .eyelid:nth-of-type(2n + 1) {
-    /* transform: rotate(-15deg); */
-  }
-
   .authorarea:hover .eyelid,
   .authorarea.happy .eyelid {
     transform: translate(0, -18%) rotate(-10deg);
-    /* top:-500%; */
   }
 
   .authorarea:hover .eyelid:nth-of-type(2n + 1),
