@@ -108,8 +108,9 @@
 import { CategoryFieldType, ListLayout, Post } from "../pageData/type";
 import ArticleList from "./ArticleList.vue";
 import Tags from "./Tags.vue";
-import { computed, ref } from "vue";
-import { withBase } from "vitepress";
+import { computed, watch } from "vue";
+import { withBase, useRouter } from "vitepress";
+import { useBrowserLocation } from '@vueuse/core'
 import { filterArticleWithField } from "../pageData/util";
 import { data as allArticle } from "../pageData/posts.data";
 import { useCategory, useLayout, useArticlePagnation } from "../pageData/storeToRefHook";
@@ -120,7 +121,7 @@ const filterLabelMap: Record<CategoryFieldType, string> = {
   tags: "标签分类",
 };
 
-const { categoryTarget, field } = useCategory();
+const { categoryTarget, field, setCategory } = useCategory();
 const { articleLayout, setArticleLayout } = useLayout();
 const filterLabel = computed(() => {
   if (!field.value) return "";
@@ -145,6 +146,39 @@ const { page, limit, setPage } = useArticlePagnation();
 const changePage = (page: number) => {
   setPage(page);
 };
+
+function formatSearch(se: any) {
+  if (typeof se !== "undefined") {
+    se = se.substr(1);
+    var arr = se.split("&"),
+      obj: Record<string, string> = {},
+      newarr = [];
+    arr.forEach((item: any) => {
+      newarr = item.split("=");
+      if (newarr[0]) {
+        obj[newarr[0]] = decodeURIComponent(newarr[1]);
+      }
+    });
+    return obj;
+  }
+}
+const router = useRouter();
+const location = useBrowserLocation();
+watch(
+  location,
+  (value) => {
+    console.log('value: ', value);
+    // console.log('location', location)
+    if (value.href) {
+      const url = new URL(value.href!)
+      let tag = url.searchParams.get('tag') || ''
+      setCategory("tags", tag);
+    }
+  },
+  {
+    immediate: true
+  }
+)
 </script>
 
 <style lang="scss" scoped>

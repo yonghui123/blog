@@ -38,7 +38,7 @@ import { filterArticleWithField } from "../pageData/util";
 import { Post, CategoryFieldType } from "../pageData/type";
 import { useCategory, useLayout, useArticlePagnation } from "../pageData/storeToRefHook";
 
-const { categoryTarget, field } = useCategory();
+const { categoryTarget, field, setCategory } = useCategory();
 const { articleLayout } = useLayout();
 const { page, limit } = useArticlePagnation();
 const articles = computed(() => {

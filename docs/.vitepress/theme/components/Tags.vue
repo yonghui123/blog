@@ -4,8 +4,10 @@
     <div class="pop-tags-list">
       <div class="pop-tag" v-for="(item, key) in data">
         <div class="pop-tag-link" @click="onChangeTag(key.toString())">
-          <span class="pop-tag-label">{{ "#" + key }}</span>
-          <strong class="pop-tag-badge">{{ data[key].length }}</strong>
+          <a :href="withBase(`/?tag=${key.toString()}`)">
+            <span class="pop-tag-label">{{ "#" + key }}</span>
+            <strong class="pop-tag-badge">{{ data[key].length }}</strong>
+          </a>
         </div>
       </div>
     </div>
