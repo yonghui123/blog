@@ -146,13 +146,15 @@ const vDirective = {
 <!-- 父组件中调用子组件，传入想要渲染的内容（插槽内容） -->
 <template>
   <Button>
-    <span class="text">按钮</span> <!-- <- 插槽内容 -->
+    <span class="text">按钮</span>
+    <!-- <- 插槽内容 -->
   </Button>
 </template>
 <!-- 子组件中定义该片段渲染的位置（插槽出口） -->
 <template>
   <button>
-    <slot></slot> <!-- <- 插槽出口 -->
+    <slot></slot>
+    <!-- <- 插槽出口 -->
   </button>
 </template>
 ```
@@ -194,6 +196,7 @@ const vDirective = {
   </div>
 </template>
 ```
+
 ### 插槽传参数
 
 ```vue
@@ -214,29 +217,152 @@ const vDirective = {
 </template>
 ```
 
-## key的本质
-key的作用：vue在更新dom的时候，会通过key值，来判断当前元素是否发生了改变，如果没有发生改变则会复用，大大提高了更新的效率。  
+## key 的本质
+
+key 的作用：vue 在更新 dom 的时候，会通过 key 值，来判断当前元素是否发生了改变，如果没有发生改变则会复用，大大提高了更新的效率。
 
 ## 插件
 
-插件的作用：扩展vue的功能，比如：添加全局组件，添加全局指令，添加全局过滤器，添加全局方法等。 
+插件的作用：扩展 vue 的功能，比如：添加全局组件，添加全局指令，添加全局过滤器，添加全局方法等。
 
 ## vue-router
+
 在单页面应用中，通过对路由信息变化的拦截，阻止浏览器重新向浏览器发出请求，根据路由信息与已经注册在路由中的组件进行匹配，从而渲染新的组件。
-在vue中主要使用的路由模式有：
-  - hash模式：在浏览器的路由中，hash值是URL组成的一部分，通常#之后的内容代表URL的hash值，在早起，hash值更多的用作页面锚点。因为hash值的变化不会请求服务器
-    所以在单页面应用中通过监听hash值**(`hashChange`)**的变化，通过hash值去匹配路由表，从而渲染新的组件。
-  - HTML5模式：在HTML5中提供了对路由监听，修改的一套API
-    - `history.pushState(state, title, url)`：向浏览器的历史记录中添加一条记录
-    - `history.replaceState(state, title, url)`：替换当前历史记录
-    - `window.onpopstate`：监听浏览器原生的前进后退（浏览器左上角的前进后退按钮）事件
-    HTML5工作模式：
-    1. 客户端拦截所有的链接点击事件，阻止其默认行为。
-    2. 路由管理器使用`history.pushState(state, title, url)`或者`history.replaceState(state, title, url)`方法，更新URL
-    3. 当URL变化的时候，路由管理器会捕捉到这个变化。
-    4. 根据新的URL，查找预先定义好的路由规则，加载相应的组件
+在 vue 中主要使用的路由模式有：
 
-### 1. 对路由的拦截
+- hash 模式：在浏览器的路由中，hash 值是 URL 组成的一部分，通常#之后的内容代表 URL 的 hash 值，在早起，hash 值更多的用作页面锚点。因为 hash 值的变化不会请求服务器
+  所以在单页面应用中通过监听 hash 值**(`hashChange`)**的变化，通过 hash 值去匹配路由表，从而渲染新的组件。
+- HTML5 模式：在 HTML5 中提供了对路由监听，修改的一套 API
+  - `history.pushState(state, title, url)`：向浏览器的历史记录中添加一条记录
+  - `history.replaceState(state, title, url)`：替换当前历史记录
+  - `window.onpopstate`：监听浏览器原生的前进后退（浏览器左上角的前进后退按钮）事件
+    HTML5 工作模式：
+  1. 客户端拦截所有的链接点击事件，阻止其默认行为。
+  2. 路由管理器使用`history.pushState(state, title, url)`或者`history.replaceState(state, title, url)`方法，更新 URL
+  3. 当 URL 变化的时候，路由管理器会捕捉到这个变化。
+  4. 根据新的 URL，查找预先定义好的路由规则，加载相应的组件
 
+## vue3 自定义 ref
 
+在 vue3 中，通过`customRef`来自定义一个响应式的数据，可以在原有响应式的基础上添加一些额外的逻辑。  
+比如：自定义一个防抖的值，在输入框中使用：
 
+```js
+import { customRef } from "vue";
+
+function debounce(fn, delay = 500) {
+  let timer = null;
+  return (...args) => {
+    timer && clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn.apply(this, args);
+    }, delay);
+  };
+}
+
+function debounceRef(value, delay = 500) {
+  return customRef((track, trigger) => {
+    let _value = value;
+    let debounceFn = debounce((newValue) => {
+      _value = newValue;
+      trigger();
+    });
+    return {
+      get() {
+        track();
+        return _value;
+      },
+      set(newValue) {
+        debounceFn(newValue);
+      },
+    };
+  });
+}
+```
+
+## 使用 vue 实现虚拟列表
+
+原理：设置一个可视区域，然后用户在滚动列表的时候，本质上是**动态修改可视区域里面的内容**
+
+### 1. 列表中每一项的高度都是固定的虚拟列表
+
+要计算渲染内容需要知道以下信息：
+
+1. 可视区域起始数据索引
+2. 可视区域结束数据索引
+3. 可视区域的数据
+4. 整个列表中偏移的位置
+
+所以整个虚拟列表的设计如下：
+
+```html
+<div class="infinite-list-container">
+  <!-- 设置一个高度为总列表高度的div，用于固定高度，形成滚动条 -->
+  <div class="infinite-list-phantom"></div>
+  <!-- 元素的可视区域 -->
+  <div class="infinite-list">
+    <!-- item1 -->
+    <!-- item2 -->
+    <!-- item3 -->
+  </div>
+</div>
+```
+
+虚拟列表滚动的步骤：
+
+1. 监听`infinite-list-container`的滚动事件，获取滚动的高度 scrollTop，并且假定以下条件：
+
+   - 可视区域的高度是固定的，称为`screenHeight`
+   - 列表每一项的高度是固定的，称为`itemHeight`
+   - 列表数据称为`listData`
+   - 当前滚动高度为`scrollTop`
+
+2. 计算出以下信息：
+
+   - 列表的总高度： `totalHeight = listData.length * itemHeight`
+   - 可以显示的列表项数： `visibleItemCount = Math.ceil(screenHeight / itemHeight)`
+   - 可视区域起始数据索引： `startIndex = Math.floor(scrollTop / itemHeight)`
+   - 可视区域结束数据索引： `endIndex = startIndex + visibleItemCount`
+   - 可视区域数据： `visibleData = listData.slice(startIndex, endIndex)`
+
+3. 当发生滚动之后，由于渲染区域相对于可视区域发生了偏移，因此需要计算出这个偏移量，然后使用 transform 属性移动回可视区域
+   `startOffset = scrollTop - (scrollTop % itemHeight)`
+   将滚动的偏移量与列表顶部进行对齐，避免显示不完整的列表项
+
+```vue
+<script setup>
+import { computed, ref, onMounted } from "vue";
+
+const props = defineProps({
+  listData: Array,
+  itemHeight: Number,
+});
+const listContainerRef = ref(null);
+const screenHeight = ref(0);
+const startIndex = ref(0);
+const endIndex = ref(0);
+// 总列表高度
+const totalHeight = computed(() => props.listData.length * props.itemHeight);
+// 列表项数
+const visibleItemCount = computed(() => Math.ceil(screenHeight / props.itemHeight));
+
+const visibleData = computed(() => props.listData.slice(startIndex.value, Math.min(endIndex.value, props.listData.length)));
+
+// 向下位移的距离
+const startOffset = ref(0)
+const listTransform = computed(() => `translateY(${startOffset.value}px)`);
+
+const scrollHandler = (e) =>{
+  let scrollTop = e.target.scrollTop;
+  startIndex.value = Math.floor(scrollTop / props.itemHeight);
+  endIndex.value = startIndex.value + visibleItemCount.value;
+  startOffset.value = scrollTop - (scrollTop % props.itemHeight);
+}
+
+onMounted(() => {
+  screenHeight.value = listContainerRef.value.clientHeight;
+  startIndex.value = 0;
+  endIndex.value = visibleItemCount.value;
+});
+</script>
+```
