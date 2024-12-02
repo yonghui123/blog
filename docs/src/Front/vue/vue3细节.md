@@ -479,3 +479,14 @@ watch(() => props.listData, () => {
 </script>
 
 ```
+
+## 一些比较好用的第三方库
+- [VUEUSE](https://v4-11-2.vueuse.org/)
+
+- [vuedraggable](https://github.com/SortableJS/Vue.Draggable)
+
+- [vue-drag-resize](https://www.npmjs.com/package/vue-drag-resize)
+
+- [vue-chartjs](https://vue-chartjs.org/)
+
+- [vue3-lazyload](https://www.npmjs.com/package/vue3-lazyload)
