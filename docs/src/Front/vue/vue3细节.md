@@ -366,3 +366,116 @@ onMounted(() => {
 });
 </script>
 ```
+
+### 2. 列表中每一项的高度都不固定的虚拟列表
+由于每一项高度不固定，所以所有关于`itemHeight`的计算都会变得不准确。包括：
+  - 列表的总高度： totalHeight
+  - 渲染列表的偏移量：startOffset
+  - 渲染列表的项目：包含起始索引，结束索引和数据
+
+如何解决这些问题：
+  1. 如何获取真实高度？  
+  在实际渲染之前，无法获取到包括每一项的真实高度，以及列表的总高度，所以一个理想的状态是：提供一个预估的高度，在初始化的时候，使用预估的高度去计算，并维护一个高度的列表，当真实高度计算出来之后，再进行替换。
+
+```vue
+<script setup>
+import { computed, ref, onMounted, watch, onUpdated } from "vue";
+const props = defineProps({
+  listData: Array,
+  itemHeight: Number,
+  estimateItemHeight: Number, // 预估的高度
+});
+
+const positions = [];
+const initPositions = () => {
+  positions = props.listData.map((_, index) => {
+    return {
+      index,
+      height: props.estimateItemHeight,
+      top: index * props.estimateItemHeight,
+      bottom: (index + 1) * props.estimateItemHeight
+    }
+  })
+}
+
+
+// 每一个列表项对应一个itemRef
+const listItemRefs = ref([]);
+const updatePositions = () => {
+  listItemRefs.value.forEach((node, index) => {
+    // 获取真实高度
+    const height = node.getBoundingClientRect().height;
+    // 获取预估高度（可能已经更新过了，所以计算两个高度差，有高度差的时候更新）
+    const estimateHeight = positions[index].height;
+    let diffHeight = height - estimateHeight;
+    if(diffHeight !== 0){
+      positions[index].height = height;
+      positions[index].bottom += diffHeight;
+      // 更新之后的高度
+      for(let i = index + 1; i < positions.length; i++){
+        // 下一个的top，是上一个的bottom
+        positions[i].top = positions[i - 1].bottom;
+        positions[i].bottom += diffHeight;
+      }
+    }
+  })
+}
+
+const totalHeight = ref(0);
+
+const listContainerRef = ref(null);
+const screenHeight = ref(0);
+
+const startIndex = ref(0);
+const endIndex = ref(0);
+const startOffset = ref('');
+const visibleData = ref([]);
+const getStartIndex = (scrollTop) => {
+  return positions.find((item, index) => {
+    return item.top >= scrollTop
+  })
+}
+
+const getEndIndex = (scrollTop) => {
+  const screenBottom = scrollTop + screenHeight.value;
+  return positions.find((item, index) => {
+    return item.bottom >= screenBottom
+  })
+}
+
+const getListOffset = () => {
+  return positions[startIndex.value - 1].bottom + 'px';
+}
+
+const scrollHandler = (e) => {
+  let scrollTop = e.target.scrollTop;
+  startIndex.value = getStartIndex(scrollTop).index;
+  endIndex.value = getEndIndex(scrollTop).index;
+  visibleData.value = props.listData.slice(startIndex.value, endIndex.value);
+}
+
+onUpdated(() => {
+  // 保证dom更新完成
+  nextTick(() => {
+    if(!listItemRefs.value.length) return;
+    // 统计更新之后的高度
+    updatePositions();
+    // 更新虚拟列表的高度
+    totalHeight.value = positions[positions.length - 1].bottom;
+    // 设置列表偏移量
+    startOffset.value = getListOffset();
+  })
+})
+
+onMounted(() => {
+  initPositions();
+  totalHeight.value = positions[positions.length - 1].bottom;
+  screenHeight.value = listContainerRef.value.clientHeight;
+})
+
+watch(() => props.listData, () => {
+  initPositions();
+})
+</script>
+
+```
