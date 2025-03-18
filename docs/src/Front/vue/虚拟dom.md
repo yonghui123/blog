@@ -1,4 +1,13 @@
-
+---
+title: 虚拟DOM
+date: 2025-03-18
+cover: img/front/vue.jpg
+catrgories:
+ - 前端
+tags:
+ - vue
+description: 详解vue3中的响应式实现原理
+---
 
 ## DOM执行的顺序
 
@@ -66,7 +75,7 @@ div3.appendChild(p)
 2. 性能效率
 在性能效率上，最高的一定还是浏览器提供的原生DOM API。
 
-在初次渲染的时候，使用innerHTML和使用虚拟DOM的差距其实不大，宏观上看都需要做个层面的计算和操作
+在初次渲染的时候，使用innerHTML和使用虚拟DOM的差距其实不大，宏观上看都需要两个层面的计算和操作
 
 但是当页面更新的时候，使用innerHTML需要的操作：
 1. 删除旧的DOM元素
